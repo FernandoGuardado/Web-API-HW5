@@ -1,12 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 
-function reviewAdded(review){
-    return {
-        type: actionTypes.ADD_REVIEW,
-    }
-}
-
 function moviesFetched(movies){
     return {
         type: actionTypes.FETCH_MOVIES,
@@ -61,7 +55,7 @@ export function fetchMovies(){
 export function fetchMovie(movieId){
     const env = runtimeEnv();
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/${movieId}?reviews=true`, {
+        return fetch(`${env.REACT_APP_API_URL}/movies/${movieId}?reviews=true`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -77,31 +71,6 @@ export function fetchMovie(movieId){
             })
             .then( (res) => {
                 dispatch(movieFetched(res));
-            })
-            .catch( (e) => console.log(e) );
-    }
-}
-
-export function setReview(data){
-    const env = runtimeEnv();
-    return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/reviews`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            },
-            body: JSON.stringify(data),
-            mode: 'cors'})
-            .then( (response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then( (res) => {
-                dispatch(reviewAdded(res));
             })
             .catch( (e) => console.log(e) );
     }
