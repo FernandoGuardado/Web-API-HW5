@@ -1,5 +1,5 @@
 .App {
-  text-align: right;
+  text-align: center;
 }
 
 .App-logo {
@@ -19,7 +19,7 @@
 }
 
 .App-intro {
-  font-size: large;
+  font-size: x-large;
 }
 
 .form-horizontal {
